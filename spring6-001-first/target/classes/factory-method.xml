@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util
        http://www.springframework.org/schema/util/spring-util.xsd">
-    <bean id="vipFactory" class="com.szyh.ldd.VipFactory" factory-method="getVip"></bean>
+    <bean id="vipFactory" class="com.szyh.ldd.com.szyh.bean.VipFactory" factory-method="getVip"></bean>
 
 
     <bean id="orderFactory" class="com.szyh.ldd.OrderFactory"></bean>

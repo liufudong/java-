@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="vipFactory" class="com.szyh.bean.VipFactory" factory-method="get"></bean>
+
+    <bean id="order" class="com.szyh.bean.Order" factory-bean="orderFactory" factory-method="get" ></bean>
+
+    <bean id="orderFactory" class="com.szyh.bean.OrderFactory"></bean>
+
+    <bean id="factoryPerson" class="com.szyh.bean.FactoryPerson"></bean>
+
+    <bean id="dateFactoryBean" class="com.szyh.bean.DateFactoryBean" >
+        <constructor-arg value="2020-11-09"></constructor-arg>
+    </bean>
+
+    <bean id="student" class="com.szyh.bean.Student">
+        <constructor-arg ref="dateFactoryBean"></constructor-arg>
+    </bean>
+</beans>

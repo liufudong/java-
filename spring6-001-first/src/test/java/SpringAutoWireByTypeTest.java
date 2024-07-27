@@ -1,4 +1,3 @@
-import com.szyh.ldd.AutoWireByName;
 import com.szyh.ldd.AutoWireByType;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
