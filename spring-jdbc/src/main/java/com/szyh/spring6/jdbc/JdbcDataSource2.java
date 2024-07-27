@@ -10,13 +10,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
-
-@Component
-public class JdbcDataSource implements DataSource {
+//<property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+//<property name="url" value="jdbc:mysql://localhost:3306/spring6"/>
+//<property name="username" value="root"/>
+//<property name="password" value="szyh2016"/>
+@Component("jdbcDataSource2")
+public class JdbcDataSource2 implements DataSource {
     // 添加4个属性
+    @Value("com.mysql.cj.jdbc.Driver")
     private String driver;
+    @Value("jdbc:mysql://localhost:3306/spring6")
     private String url;
+    @Value("root")
     private String username;
+    @Value("szyh2016")
     private String password;
 
     public String getDriver() {
