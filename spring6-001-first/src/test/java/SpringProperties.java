@@ -12,5 +12,8 @@ public class SpringProperties {
 
         MyDataSource3 myDataSource4 = applicationContext.getBean("myDataSource3", MyDataSource3.class);
         System.out.println("myDataSource4:"+myDataSource4.toString());
+
+
+
     }
 }
