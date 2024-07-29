@@ -20,9 +20,31 @@ public class TestJdbcTemplate {
         String sql ="insert into t_user(id,real_name,age) values (?,?,?)";
         List<Object[]> batchArgs = new ArrayList<>();
         Object [] objects1= {null,"张三",20};
-        Object [] objects2= {null,"张三7",30};
-        Object [] objects3= {null,"张三8",40};
-        Object [] objects4= {null,"张三9",50};
+        Object [] objects2= {null,"张三10",30};
+        Object [] objects3= {null,"张三11",40};
+        Object [] objects4= {null,"张三12",50};
+        batchArgs.add(objects1);
+        batchArgs.add(objects2);
+        batchArgs.add(objects3);
+        batchArgs.add(objects4);
+        int[] ints = jdbcTemplate.batchUpdate(sql,batchArgs);
+        System.out.println("ints:"+ Arrays.toString(ints));
+//        int[] ints = jdbcTemplate.batchUpdate("INSERT INTO `t_user` VALUES (2, '张三4', 20)");
+    }
+
+    @Test
+    public void testDruidDataSource() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
+        JdbcTemplate jdbcTemplate = applicationContext.getBean("jdbcTemplate", JdbcTemplate.class);
+        System.out.println("jdbcTemplate:" + jdbcTemplate);
+//        String sql = "insert into t_user(id,real_name,age) values(?,?,?)";
+//
+        String sql ="insert into t_user(id,real_name,age) values (?,?,?)";
+        List<Object[]> batchArgs = new ArrayList<>();
+        Object [] objects1= {null,"张三",20};
+        Object [] objects2= {null,"张三10",30};
+        Object [] objects3= {null,"张三11",40};
+        Object [] objects4= {null,"张三12",50};
         batchArgs.add(objects1);
         batchArgs.add(objects2);
         batchArgs.add(objects3);
