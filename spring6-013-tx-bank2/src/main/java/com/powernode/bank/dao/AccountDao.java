@@ -19,4 +19,5 @@ public interface AccountDao {
      * @return
      */
     int update(Account act);
+    int insert(Account account);
 }
