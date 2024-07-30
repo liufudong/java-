@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+//事务
 @Transactional
 @Component("accountService")
 public class AccountServiceImpl implements AccountService {
