@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace先随意写一个-->
+<mapper namespace="car2">
+    <!--insert sql：保存一个汽车信息-->
+    <insert id="insertCar2" parameterType="java.util.Map">
+
+       insert into t_car (id,car_num,branb,guide_price,produce_time,car_type) values
+       (null,#{carNum},#{branb},#{guidePrice},#{produceTime},#{carType})
+    </insert>
+        <insert id="insertCarByPOJO" parameterType="com.szyh.mybatis.Car">
+
+       insert into t_car (id,car_num,branb,guide_price,produce_time,car_type) values
+       (null,#{carNum},#{branb},#{guidePrice},#{produceTime},#{carType})
+    </insert>
+</mapper>
