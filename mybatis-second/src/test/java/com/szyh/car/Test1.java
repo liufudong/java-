@@ -1,6 +1,7 @@
 package com.szyh.car;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
@@ -22,24 +23,25 @@ public class Test1 {
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
-        }finally {
+        } finally {
             if (sqlSession != null) {
                 sqlSession.close();
             }
         }
     }
+
     @Test
     public void test2() {
         SqlSession sqlSession = null;
         try {
             sqlSession = new SqlSessionFactoryBuilder().build(ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml")).openSession();
-            HashMap<String,String> map=new HashMap<>();
-            map.put("car_num","1");
-            map.put("branb","小牛v999");
-            map.put("produce_time","2020-11-04");
-            map.put("car_type","燃油车");
-            map.put("guide_price","-1");
-            int insert = sqlSession.insert("car.insert2",map);
+            HashMap<String, String> map = new HashMap<>();
+            map.put("car_num", "1");
+            map.put("branb", "小牛v999");
+            map.put("produce_time", "2020-11-04");
+            map.put("car_type", "燃油车");
+            map.put("guide_price", "-1");
+            int insert = sqlSession.insert("car.insert2", map);
 
             sqlSession.commit();
             System.out.println("insert:" + insert);
@@ -49,40 +51,45 @@ public class Test1 {
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
-        }finally {
+        } finally {
             if (sqlSession != null) {
                 sqlSession.close();
             }
         }
     }
+
     @Test
     public void test3() {
         SqlSession sqlSession = null;
         try {
-            sqlSession = new SqlSessionFactoryBuilder().build(ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml")).openSession();
+            SqlSessionFactory build = new SqlSessionFactoryBuilder().build(ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml"));
+            sqlSession = build.openSession();
             Car car = new Car("103", "1丰田v我5022", 90f, "2014-10-05", "氢能源");
-            int insert = sqlSession.insert("car.insert3",car);
+            int insert = sqlSession.insert("car.insert3", car);
 
             sqlSession.commit();
-            System.out.println("insert:" + insert);
+
+            sqlSession.insert("car.insert3", car);
+
         } catch (Exception e) {
             e.printStackTrace();
             // 回滚
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
-        }finally {
+        } finally {
             if (sqlSession != null) {
                 sqlSession.close();
             }
         }
     }
+
     @Test
     public void delete1() {
         SqlSession sqlSession = null;
         try {
             sqlSession = new SqlSessionFactoryBuilder().build(ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml")).openSession();
-            int delete = sqlSession.delete("car.delete","29");
+            int delete = sqlSession.delete("car.delete", "29");
             sqlSession.commit();
             System.out.println("delete:" + delete);
         } catch (Exception e) {
@@ -91,21 +98,22 @@ public class Test1 {
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
-        }finally {
+        } finally {
             if (sqlSession != null) {
                 sqlSession.close();
             }
         }
     }
+
     @Test
     public void update1() {
         SqlSession sqlSession = null;
         try {
             sqlSession = new SqlSessionFactoryBuilder().build(ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml")).openSession();
-            HashMap<String,String> map=new HashMap<>();
-            map.put("branb","达拉斯小牛");
-            map.put("id","33");
-            int update = sqlSession.update("car.update",map );
+            HashMap<String, String> map = new HashMap<>();
+            map.put("branb", "达拉斯小牛");
+            map.put("id", "33");
+            int update = sqlSession.update("car.update", map);
             sqlSession.commit();
             System.out.println("update:" + update);
         } catch (Exception e) {
@@ -114,12 +122,13 @@ public class Test1 {
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
-        }finally {
+        } finally {
             if (sqlSession != null) {
                 sqlSession.close();
             }
         }
     }
+
     @Test
     public void selectAll() {
         SqlSession sqlSession = null;
@@ -127,7 +136,7 @@ public class Test1 {
             sqlSession = new SqlSessionFactoryBuilder().build(ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml")).openSession();
             List<Car> objects = sqlSession.selectList("car.selectAll");
             for (Car object : objects) {
-                System.out.println("object:"+object.toString());
+                System.out.println("object:" + object.toString());
             }
 
         } catch (Exception e) {
@@ -136,19 +145,76 @@ public class Test1 {
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
-        }finally {
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+    }
+
+    @Test
+    public void selectOne() {
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = new SqlSessionFactoryBuilder().build(ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml")).openSession();
+            Car objects = sqlSession.selectOne("car.selectOne", "34");
+            System.out.println("object:" + objects.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 回滚
+            if (sqlSession != null) {
+                sqlSession.rollback();
+            }
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+    }
+
+    @Test
+    public void testUNPOOLED() {
+        SqlSession sqlSession = null;
+        try {
+                SqlSessionFactory build = new SqlSessionFactoryBuilder().build(ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml"));
+                sqlSession = build.openSession();
+                Car car = new Car("103", "1丰田v我5022", 90f, "2014-10-05", "氢能源");
+                int insert = sqlSession.insert("car.insert3", car);
+                sqlSession.commit();
+                sqlSession.insert("car.insert3", car);
+
+
+                SqlSession sqlSession2 = build.openSession();
+                insert = sqlSession2.insert("car.insert3", car);
+                sqlSession.commit();
+                sqlSession.insert("car.insert3", car);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 回滚
+            if (sqlSession != null) {
+                sqlSession.rollback();
+            }
+        } finally {
             if (sqlSession != null) {
                 sqlSession.close();
             }
         }
     }
     @Test
-    public void selectOne() {
+    public void testPool() {
         SqlSession sqlSession = null;
         try {
-            sqlSession = new SqlSessionFactoryBuilder().build(ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml")).openSession();
-            Car objects = sqlSession.selectOne("car.selectOne","34");
-            System.out.println("object:"+objects.toString());
+            SqlSessionFactory build = new SqlSessionFactoryBuilder().build(ClassLoader.getSystemClassLoader().getResourceAsStream("mybatis-config.xml"));
+            for (int i = 0; i < 20; i++) {
+                sqlSession = build.openSession();
+                Car car = new Car("103", "1丰田", 90f, "2014-10-05", "氢能源");
+                int insert = sqlSession.insert("car.insert3", car);
+                sqlSession.commit();
+                sqlSession.insert("car.insert3", car);
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -156,7 +222,7 @@ public class Test1 {
             if (sqlSession != null) {
                 sqlSession.rollback();
             }
-        }finally {
+        } finally {
             if (sqlSession != null) {
                 sqlSession.close();
             }

@@ -29,6 +29,6 @@
     </environments>
     <mappers>
         <!--sql映射文件创建好之后，需要将该文件路径配置到这里-->
-        <mapper resource="CarMapper.xml"/>
+        <mapper resource="TactMapper.xml"/>
     </mappers>
 </configuration>
