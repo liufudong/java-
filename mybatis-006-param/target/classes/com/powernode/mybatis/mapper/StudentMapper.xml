@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powernode.mybatis.mapper.StudentMapper">
+    <!-- /**
+     * 根据name查询
+     * @param name
+     * @return
+     */
+     List<Student> selectByName(String name);-->
+    <select id="selectByName" resultType="com.powernode.mybatis.pojo.Student">
+        select *
+        from t_student
+        where name = #{name}
+    </select>
+
+    <!--/**
+    * 根据id查询
+    * @param id
+    * @return
+    */
+    Student selectById(Long id);-->
+    <select id="selectById" resultType="com.powernode.mybatis.pojo.Student">
+        select *
+        from t_student
+        where id = #{id}
+    </select>
+    <!-- /**
+     * 根据birth查询
+     * @param birth
+     * @return
+         List<Student> selectByBirth(Date birth);
+     */-->
+    <select id="selectByBirth" resultType="com.powernode.mybatis.pojo.Student">
+        select *
+        from t_student
+        where birth = #{birth}
+    </select>
+    <select id="selectBySex" resultType="com.powernode.mybatis.pojo.Student">
+        select *
+        from t_student
+        where sex = #{sex}
+    </select>
+    <!-- /**
+     * 根据name和age查询
+     *
+     * @param paramMap
+     * @return
+     */
+     List<Student> selectByParamMap(Map<String, Object> paramMap);-->
+    <select id="selectByParamMap" resultType="com.powernode.mybatis.pojo.Student">
+        select *
+        from t_student
+        where name = #{nameKey}
+          and age = #{ageKey}
+    </select>
+    <select id="selectByNameAndAge" resultType="com.powernode.mybatis.pojo.Student">
+        select *
+        from t_student
+        where name = #{name}
+          and age = #{age}
+    </select>
+    <insert id="insert">
+        <!--  private Long id;
+     private String name;
+     private Integer age;
+     private Double height;
+     private Character sex;
+     private Date birth;-->
+        insert into t_student
+        (id,name,age,height,sex,birth) values (null,#{name},#{age},#{height},#{sex},#{birth})
+    </insert>
+   <!-- /**
+    * 通过id查询一条记录，返回Map集合
+    * @param id
+    * @return
+    */
+    Map<String, Object> selectByIdRetMap(Long id);-->
+    <select id="selectByIdRetMap" resultType="Map">
+        select * from t_student
+        where id = #{id}
+    </select>
+
+    <!--/**
+    * 查询所有的Car，返回一个List集合。List集合中存储的是Map集合。
+    * @return
+    */
+    List<Map<String,Object>> selectAllRetListMap();-->
+    <select id="selectAllRetListMap" resultType="Map">
+        select * from t_student
+    </select>
+    <!--/**
+    * 获取所有的Car，返回一个Map集合。
+    * Map集合的key是Car的id。
+    * Map集合的value是对应Car。
+    * @return
+    */
+    @MapKey("id")
+    Map<Long,Map<String,Object>> selectAllRetMap();-->
+    <select id="selectAllRetMap" resultType="Map">
+        select * from  t_student
+    </select>
+</mapper>
