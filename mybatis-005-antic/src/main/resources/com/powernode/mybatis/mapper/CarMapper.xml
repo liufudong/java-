@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powernode.mybatis.mapper.CarMapper">
+
+    <select id="selectByCarType" resultType="com.powernode.mybatis.pojo.Car">
+
+        select id, car_num as carNum, branb, produce_time as produceTime, car_type as cartype, guide_price as guidePrice
+        from t_car
+        where car_type = #{carType}
+    </select>
+    <delete id="delete">
+        delete
+        from t_car
+        where id = #{id}
+    </delete>
+    <!--   删除多条语句-->
+    <delete id="deleteBatch">
+        delete
+        from t_car
+        where id in (${ids})
+    </delete>
+    <select id="selectAll" resultType="com.powernode.mybatis.pojo.Car">
+        <!--  order by id asc 正序 ASC：表示按升序排序。 DESC：表示按降序排序。
+   desc是一个关键字，不能带单引号的，所以在进行sql语句关键字拼接的时候，必须使用${}
+   ●-->
+
+        select id, car_num as carNum,branb,produce_time as produceTime,car_type as cartype ,guide_price as guidePrice
+        from t_car
+        order by id ${desc}
+    </select>
+
+    <select id="selectLikeByBrand" resultType="com.powernode.mybatis.pojo.Car">
+        <!--  like的三种用法 -->
+        <!--      select id, car_num as carNum,branb,produce_time as produceTime,car_type as cartype ,guide_price as guidePrice
+               from t_car
+               where branb like '%${branb}%'-->
+        <!-- select id, car_num as carNum, branb, produce_time as produceTime, car_type as cartype, guide_price as guidePrice
+         from t_car
+         where branb like concat('%', #{branb}, '%')-->
+        select id, car_num as carNum,branb,produce_time as produceTime,car_type as cartype ,guide_price as guidePrice
+        from t_car
+        where branb like "%"#{branb}"%"
+    </select>
+    <!--获取自动生成的主键-->
+    <insert id="insertUseGeneratedKeys" useGeneratedKeys="true" keyProperty="id" >
+        insert into t_car(id, car_num, branb, produce_time, car_type, guide_price)
+        values (null, #{carNum},  #{branb},  #{produceTime},  #{carType},  #{guidePrice})
+    </insert>
+</mapper>

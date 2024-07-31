@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="car2">
+
+    <select id="selectAll" resultType="com.szyh.car.Car">
+        select id, car_num as carNum, branb, produce_time as produceTime, car_type as carType, guide_price as guidePrice from t_car
+    </select>
+    <select id="selectOne" resultType="com.szyh.car.Car">
+        select id, car_num as carNum, branb, produce_time as produceTime, car_type as carType, guide_price as guidePrice from t_car where id = #{id}
+    </select>
+    <delete id="delete">
+        delete from t_car where id = #{id}
+    </delete>
+    <update id="update">
+        update t_car set branb = #{branb} where id =#{id}
+    </update>
+    <insert id="insert">
+        insert into t_car (id, car_num, branb, produce_time, car_type, guide_price)
+        values (null, "100", "小牛v999", "2020-11-04", "燃油车", "50")
+    </insert>
+    <insert id="insert2">
+        insert into t_car (id,car_num, branb, produce_time, car_type, guide_price)
+        values (null,#{car_num}, #{branb}, #{produce_time}, #{car_type}, #{guide_price})
+    </insert>
+    <insert id="insert3">
+        insert into t_car (id,car_num, branb, produce_time, car_type, guide_price)
+        values (null,#{carNum}, #{branb}, #{produceTime}, #{carType}, #{guidePrice})
+    </insert>
+</mapper>

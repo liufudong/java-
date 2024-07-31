@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powernode.mybatis.mapper.TUserMapper">
+
+
+    <select id="selectAll" resultType="com.powernode.mybatis.pojo.Car">
+        <!--    /**
+     * 查询所有的Car
+     * @param table 根据表名拼接
+     * @return
+     */-->
+
+        select id, car_num as carNum,branb,produce_time as produceTime,car_type as cartype ,guide_price as guidePrice
+        from t_user${name}
+    </select>
+</mapper>
