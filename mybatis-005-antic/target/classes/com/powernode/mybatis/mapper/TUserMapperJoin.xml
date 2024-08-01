@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powernode.mybatis.mapper.TUserMapperJoin">
+    <select id="selectBySid" resultMap="studentResultMap">
+        select * from t_student2 s where cid = #{cid}
+    </select>
+    <resultMap id="studentResultMap" type="com.powernode.mybatis.pojo.TUserJoin">
+        <id property="sid" column="sid"></id>
+        <result property="sname" column="sname"></result>
+        <result property="cid" column="cid"></result>
+        <association property="tClazzJoin" select="com.powernode.mybatis.mapper.TClazzJoinMapper.selectByCid2" column="cid"/>
+    </resultMap>
+
+    <!-- 根据学生名查询学生的sid和对应的班级cid -->
+    <select id="selectStudentInfoByName" resultMap="tUserJoinMap" parameterType="string">
+        SELECT s.sid, c.cid AS clazz_cid,c.cname, s.sname
+        FROM t_clazz c
+                 JOIN t_student2 s ON c.cid = s.cid
+        WHERE s.sname =    #{studentName}
+    </select>
+  <!--  tUserJoinMap resultMap：
+
+    id 标签用于指定主键，在这里将数据库表中的 sid 列映射到 Java 对象的 sid 属性上。
+    result 标签用于将数据库表中的列映射到 Java 对象的属性上，这里将 sname 映射到 sname 属性，将 clazz_cid 映射到 cid 属性。
+    association 标签用于处理关联关系，这里将关联的 TClazzJoin 对象映射到 tClazzJoin 属性上，并指定了关联的 resultMap 为 tClazzJoinMap。
+    tClazzJoinMap resultMap：
+
+    这里是映射 TClazzJoin 对象的 resultMap。
+    通过 result 标签将数据库表中的 cname 列映射到 Java 对象的 cname 属性上，将 clazz_cid 映射到 cid 属性上。-->
+    <resultMap id="tUserJoinMap" type="com.powernode.mybatis.pojo.TUserJoin">
+        <id property="sid" column="sid"/>
+        <result property="sname" column="sname"/>
+        <result property="cid" column="clazz_cid"/>
+        <association property="tClazzJoin" resultMap="tClazzJoinMap"/>
+    </resultMap>
+
+    <resultMap id="tClazzJoinMap" type="com.powernode.mybatis.pojo.TClazzJoin">
+        <result property="cname" column="cname"/>
+        <result property="cid" column="clazz_cid"/>
+    </resultMap>
+    <!--这是通过cname班级的名字查询到学生信息  SELECT s.sid, s.sname, s.cid
+    FROM t_student2 s
+    JOIN t_clazz c ON s.cid = c.cid
+    WHERE c.cname = "高三2班"-->
+</mapper>
