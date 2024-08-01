@@ -2,6 +2,7 @@ package com.powernode.mybatis.mapper;
 
 
 import com.powernode.mybatis.pojo.Car;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,6 +14,34 @@ import java.util.List;
  * @since 1.0
  */
 public interface CarMapper {
+    /**
+     * 更新信息，使用set标签
+     * @param car
+     * @return
+     */
+    int updateWithSet(Car car);
+
+    /**
+     * 通过foreach完成批量删除
+     * @param ids
+     * @return
+     */
+    int deleteBatchByForeach(@Param("ids") Long[] ids);
+
+    /**
+     * 获取总记录条数
+     * @return
+     */
+    Long selectTotal();
+    /**
+     * if标签
+     * 根据多条件查询Car
+     * @param branb
+     * @param guidePrice
+     * @param carType
+     * @return
+     */
+    List<Car> selectByMultiCondition(@Param("branb") String branb, @Param("guidePrice") Double guidePrice, @Param("carType") String carType);
 
     /**
      * 根据car_num获取Car
@@ -58,4 +87,11 @@ public interface CarMapper {
      * 插入数据时获取自动生成的主键
      */
     void insertUseGeneratedKeys(Car car);
+
+    /**
+     * 批量添加，使用foreach标签
+     * @param cars
+     * @return
+     */
+    int insertBatchByForeach(@Param("cars") List<Car> cars);
 }

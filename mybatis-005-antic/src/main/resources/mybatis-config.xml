@@ -7,13 +7,18 @@
     <properties resource="jdbc.properties"></properties>
     <settings>
         <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--  是否开启驼峰命名自动映射-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
-    <!--    <typeAliases>
-            &lt;!&ndash; 起别名第一种方式：typeAlias&ndash;&gt;
+      <typeAliases>
+               <!--  &lt;!&ndash; 起别名第一种方式：typeAlias&ndash;&gt;
             &lt;!&ndash;        <typeAlias type="com.powernode.mybatis.pojo.Car" alias="Car"></typeAlias>&ndash;&gt;
-            &lt;!&ndash;第二种方式：package&ndash;&gt;
-            <typeAlias type="com.powernode.mybatis.pojo"></typeAlias>
-        </typeAliases>-->
+            &lt;!&ndash;第二种方式：package&ndash;&gt;-->
+        <!--  如果一个包下的类太多，每个类都要起别名，会导致typeAlias标签配置较多
+        ，所以mybatis用提供package的配置方式，只需要指定包名，该包下的所有类都自动起别名，别名就是简类名。并且别名不区分大小写。-->
+            <package name="com.powernode.mybatis.pojo"></package>
+        </typeAliases>
+
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
