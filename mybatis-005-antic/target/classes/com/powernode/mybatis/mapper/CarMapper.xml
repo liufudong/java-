@@ -3,10 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.powernode.mybatis.mapper.CarMapper">
+    <select id="selectTotal" resultType="Long">
 
+        <!-- select id, car_num as carNum, branb, produce_time as produceTime, car_type as cartype, guide_price as guidePrice
+        from t_car
+        where car_type = #{carType}-->
+        select count(*)
+        from t_car
+    </select>
     <select id="selectByCarType" resultType="com.powernode.mybatis.pojo.Car">
 
-        select id, car_num as carNum, branb, produce_time as produceTime, car_type as cartype, guide_price as guidePrice
+        <!-- select id, car_num as carNum, branb, produce_time as produceTime, car_type as cartype, guide_price as guidePrice
+        from t_car
+        where car_type = #{carType}-->
+        select *
         from t_car
         where car_type = #{carType}
     </select>
@@ -21,12 +31,15 @@
         from t_car
         where id in (${ids})
     </delete>
-    <select id="selectAll" resultType="com.powernode.mybatis.pojo.Car">
+    <select id="selectAll" resultMap="carResultMap">
         <!--  order by id asc 正序 ASC：表示按升序排序。 DESC：表示按降序排序。
    desc是一个关键字，不能带单引号的，所以在进行sql语句关键字拼接的时候，必须使用${}
    ●-->
 
-        select id, car_num as carNum,branb,produce_time as produceTime,car_type as cartype ,guide_price as guidePrice
+        <!--  select id, car_num as carNum,branb,produce_time as produceTime,car_type as cartype ,guide_price as guidePrice
+     from t_car
+     order by id ${desc} -->
+        select *
         from t_car
         order by id ${desc}
     </select>
@@ -43,8 +56,77 @@
         from t_car
         where branb like "%"#{branb}"%"
     </select>
-    <insert id="insertUseGeneratedKeys" useGeneratedKeys="true" keyProperty="id" >
-        insert into t_car(id, car_num, branb, produce_time, car_type, guide_price)
-        values (null, #{carNum},  #{branb},  #{produceTime},  #{carType},  #{guidePrice})
+    <!--获取自动生成的主键-->
+    <insert id="insertUseGeneratedKeys" useGeneratedKeys="true" keyProperty="id">
+        insert into t_car(<include refid="carCols"></include>)
+        values (null, #{carNum}, #{branb}, #{produceTime}, #{carType}, #{guidePrice})
     </insert>
+    <sql id="carCols">id, car_num, branb, produce_time, car_type, guide_price</sql>
+    <!--使用resultMap进行结果映射-->
+    <resultMap id="carResultMap" type="Car">
+        <id property="id" column="id"></id>
+        <result property="carNum" column="car_num"></result>
+        <result property="branb" column="branb"></result>
+        <result property="produceTime" column="produce_time"></result>
+        <result property="carType" column="car_type"></result>
+        <result property="guidePrice" column="guide_price"></result>
+    </resultMap>
+    <!--/**
+    * if标签
+    * 根据多条件查询Car
+    * @param brand
+    * @param guidePrice
+    * @param carType
+    * @return
+    */
+    List<Car> selectByMultiCondition(@Param("brand") String brand, @Param("guidePrice") Double guidePrice, @Param("carType") String carType);-->
+    <select id="selectByMultiCondition" resultMap="carResultMap">
+        select *
+        from t_car
+        <where>
+            <if test="branb !=null and branb != ''">
+                branb like "%" #{branb} "%"
+            </if>
+            <if test="guidePrice !=null and guidePrice != ''">
+                and guide_price >= #{guidePrice}
+            </if>
+            <if test="carType !=null and carType != ''">
+                and car_type = #{carType}
+            </if>
+        </where>
+    </select>
+    <update id="updateWithSet">
+        update t_car
+        <set>
+            <if test="carNum != null and carNum != ''">car_num = #{carNum},</if>
+            <if test="branb != null and branb != ''">branb = #{branb},</if>
+            <if test="guidePrice != null and guidePrice != ''">guide_price = #{guidePrice},</if>
+            <if test="produceTime != null and produceTime != ''">produce_time = #{produceTime},</if>
+            <if test="carType != null and carType != ''">car_type = #{carType},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--   /**
+       * 通过foreach完成批量删除
+       * @param ids
+       * @return
+       */
+       int deleteBatchByForeach(@Param("ids") Long[] ids);-->
+    <delete id="deleteBatchByForeach">
+        delete from t_car
+        where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+  <!--  insert into t_car(id, car_num, branb, produce_time, car_type, guide_price)
+    values (null, #{carNum}, #{branb}, #{produceTime}, #{carType}, #{guidePrice})-->
+
+    <insert id="insertBatchByForeach">
+        insert into t_car values
+        <foreach collection="cars" item="car" separator=",">
+            (null,#{car.carNum},#{car.branb},#{car.produceTime},#{car.carType},#{car.guidePrice})
+        </foreach>
+    </insert> 
 </mapper>

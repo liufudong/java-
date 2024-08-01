@@ -2,6 +2,7 @@ package com.powernode.mybatis;
 
 import com.powernode.mybatis.mapper.CarMapper;
 import com.powernode.mybatis.mapper.TUserMapper;
+import com.powernode.mybatis.mapper.TUserMapperJoin;
 import com.powernode.mybatis.pojo.Car;
 import com.powernode.mybatis.utils.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class CarTest {
     @Test
@@ -136,5 +138,12 @@ public class CarTest {
         int count = mapper.insertBatchByForeach(cars);
         System.out.println("插入了几条记录" + count);
         sqlSession.commit();
+    }
+    @Test
+    public void testTUserMapperJoin(){
+        SqlSession sqlSession = SqlSessionUtil.getSqlSessionFactory().openSession();
+        TUserMapperJoin mapper = sqlSession.getMapper(TUserMapperJoin.class);
+        Map<String, Object> map = mapper.selectStudentInfoByName("王五");
+        System.out.println("map" + map);
     }
 }

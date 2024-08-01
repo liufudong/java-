@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.powernode.mybatis.mapper.TUserMapperJoin">
+    <!-- 根据学生名查询学生的sid和对应的班级cid -->
+    <select id="selectStudentInfoByName" resultType="map" parameterType="string">
+        SELECT s.sid, c.cid AS clazz_cid, s.sname
+        FROM t_clazz c
+                 JOIN t_student2 s ON c.cid = s.cid
+        WHERE s.sname =    #{studentName}
+    </select>
+
+</mapper>
