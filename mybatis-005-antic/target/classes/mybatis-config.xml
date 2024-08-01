@@ -9,6 +9,8 @@
         <setting name="logImpl" value="STDOUT_LOGGING"/>
         <!--  是否开启驼峰命名自动映射-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--延迟加载修改全局的配置setting，lazyLoadingEnabled=true，如果开启全局延迟加载，想让某个sql不使用延迟加载：fetchType="eager"-->
+        <setting name="lazyLoadingEnabled" value="true"/>
     </settings>
       <typeAliases>
                <!--  &lt;!&ndash; 起别名第一种方式：typeAlias&ndash;&gt;

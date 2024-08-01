@@ -1,9 +1,12 @@
 package com.powernode.mybatis;
 
 import com.powernode.mybatis.mapper.CarMapper;
+import com.powernode.mybatis.mapper.TClazzJoinMapper;
 import com.powernode.mybatis.mapper.TUserMapper;
 import com.powernode.mybatis.mapper.TUserMapperJoin;
 import com.powernode.mybatis.pojo.Car;
+import com.powernode.mybatis.pojo.TClazzJoin;
+import com.powernode.mybatis.pojo.TUserJoin;
 import com.powernode.mybatis.utils.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -127,8 +130,9 @@ public class CarTest {
         System.out.println(count);
         sqlSession.commit();
     }
+
     @Test
-    public void testInsertBatchByForeach(){
+    public void testInsertBatchByForeach() {
         SqlSession sqlSession = SqlSessionUtil.getSqlSessionFactory().openSession();
         CarMapper mapper = sqlSession.getMapper(CarMapper.class);
         Car car1 = new Car(null, "2001", "兰博基尼", 100.0, "1998-10-11", "燃油车");
@@ -139,11 +143,32 @@ public class CarTest {
         System.out.println("插入了几条记录" + count);
         sqlSession.commit();
     }
+
     @Test
-    public void testTUserMapperJoin(){
+    public void testTUserMapperJoin() {
         SqlSession sqlSession = SqlSessionUtil.getSqlSessionFactory().openSession();
         TUserMapperJoin mapper = sqlSession.getMapper(TUserMapperJoin.class);
-        Map<String, Object> map = mapper.selectStudentInfoByName("王五");
+        TUserJoin map = mapper.selectStudentInfoByName("王五");
         System.out.println("map" + map);
+    }
+
+    @Test
+    public void testSelectBySid() {
+        SqlSession sqlSession = SqlSessionUtil.getSqlSessionFactory().openSession();
+        TUserMapperJoin mapper = sqlSession.getMapper(TUserMapperJoin.class);
+        mapper.selectBySid(1001).forEach(map -> {
+            System.out.println("map" + map);
+        });
+        mapper.selectBySid(1001).forEach(map -> {
+            System.out.println("map2" + map);
+        });
+    }
+
+    @Test
+    public void testTClazzJoinMapper() {
+        SqlSession sqlSession = SqlSessionUtil.getSqlSessionFactory().openSession();
+        TClazzJoinMapper mapper = sqlSession.getMapper(TClazzJoinMapper.class);
+        TClazzJoin tClazzJoin = mapper.selectClazzAndStusByCid(1002);
+        System.out.println("map" + tClazzJoin);
     }
 }
