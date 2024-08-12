@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: nacos_config_test
+  profiles:
+    active: pro
+#  profiles:
+#    active: @profiles.active@
+#  cloud:
+#    nacos:
+#      config:
+#        server-addr: 127.0.0.1:8848
+#        namespace: a730ba07-67fc-4709-8204-7f1f6a63e00c
+#        extension-configs:
+#          - data-id: mysql_common.yml
+#            group: DEFAULT_GROUP # 如果这个配置文件属于特定的组，可以在这里指定，否则使用默认组
+#            refresh: true # 是否支持动态刷新，默认为false
+#
+##          - data-id: redis_common.yml
+##            group: DEFAULT_GROUP # 如果这个配置文件属于特定的组，可以在这里指定，否则使用默认组
+##            refresh: true # 是否支持动态刷新，默认为false
+
+server:
+  port: 9001
+  servlet:
+    context-path: /nacos2

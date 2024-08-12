@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: e0e869ae-c11e-4f78-b229-60ee2e4153d2
+        extension-configs:
+          - data-id: mysql_common.yml
+            group: DEFAULT_GROUP # 如果这个配置文件属于特定的组，可以在这里指定，否则使用默认组
+            refresh: true # 是否支持动态刷新，默认为false

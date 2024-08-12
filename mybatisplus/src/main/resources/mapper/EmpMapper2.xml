@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplus.mapper.hsp.EmpMapper2">
+    <resultMap id="resultMap1" type="com.example.mybatisplus.pojo.hsp.EmpBean2">
+        <id property="empNo" column="empno"/>
+        <result property="eName" column="ename"/>
+        <result property="job" column="job"/>
+        <result property="mgr" column="mgr"/>
+        <result property="hireDate" column="hiredate"/>
+        <result property="sal" column="sal"/>
+        <result property="comm" column="comm"/>
+        <result property="deptNo" column="deptno"/>
+        <association property="grade">
+            <id property="grade" column="grade"/>
+            <result property="losal" column="losal"/>
+            <result property="hisal" column="hisal"/>
+        </association>
+    </resultMap>
+    <select id="queryEmpBean2" resultMap="resultMap1">
+
+        SELECT emp.*, salgrade.*
+        FROM emp
+                 RIGHT JOIN salgrade ON emp.sal BETWEEN salgrade.losal AND salgrade.hisal
+
+    </select>
+    <resultMap id="resultMap3" type="com.example.mybatisplus.pojo.hsp.CName2">
+        <id property="cid" column="cid"/>
+        <result property="cname" column="cname"/>
+        <collection property="list" ofType="com.example.mybatisplus.pojo.hsp.SName2" >
+            <id  property="sid" column="sid"/>
+            <result  property="sname" column="sname"/>
+            <result  property="cid" column="cid"/>
+            <result  property="pid" column="pid"/>
+        </collection>
+    </resultMap>
+    <select id="queryEmpBean3" resultMap="resultMap3">
+        SELECT t_clazz.*, t_student.* FROM t_clazz LEFT JOIN t_student
+            ON t_clazz.cid =
+            t_student.cid WHERE t_clazz.cname = "高三1班";
+    </select>
+
+    <select id="queryEmpBeanAll" resultMap="resultMap3">
+        SELECT t_clazz.*, t_student.* FROM t_clazz LEFT JOIN t_student
+                                                             ON t_clazz.cid =
+                                                                t_student.cid
+                            ;
+    </select>
+
+    <select id="queryTClazz" resultType="com.example.mybatisplus.pojo.Clazz">
+        SELECT * FROM t_clazz
+    </select>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ormmysql.dao.StudentMapper">
+    <select id="selectStudentById" resultType="com.example.ormmysql.pojo.Student">
+        select *
+        from student2
+        where id = #{id}
+    </select>
+    <resultMap id="carResultMap" type="com.example.ormmysql.pojo.Student">
+        <id property="id" column="id"></id>
+        <result property="age" column="age"></result>
+        <result property="name" column="name"></result>
+        <result property="height" column="height"></result>
+        <result property="birth" column="birth"></result>
+        <result property="sex" column="sex"></result>
+    </resultMap>
+    <select id="selectStudentAll" resultMap="carResultMap">
+        select *
+        from student2
+    </select>
+</mapper>

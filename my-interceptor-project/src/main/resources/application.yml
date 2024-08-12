@@ -1,0 +1,24 @@
+#推荐用application.yml
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+
+  application:
+    name: my-interceptor-project
+#logging:
+#  level:
+#    org.springframework.boot.autoconfigure: DEBUG
+myapp:
+  #测试这个文件生效没 可在java内直接这样访问 @Value("${myapp.greeting}")
+  greeting: Hello from application.yml!
+server:
+  #设置访问端口号
+  port: 9002
+  #应用的 contextpath
+  servlet:
+    context-path: /interceptor
+

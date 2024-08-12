@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplus.mapper.ClazzMapper">
+
+    <select id="getClazzAndStudents" resultMap="ClazzAndStudentsResultMap">
+        SELECT s.*, c.cid, c.cname
+        FROM t_student s
+                 LEFT JOIN t_clazz c ON s.cid = c.cid
+        WHERE c.cname = #{cname}
+    </select>
+    <resultMap id="ClazzAndStudentsResultMap" type="com.example.mybatisplus.pojo.Clazz">
+        <id property="cid" column="cid"/>
+        <result property="cname" column="cname"/>
+        <collection property="students" ofType="com.example.mybatisplus.pojo.Student">
+            <id property="sid" column="sid"/>
+            <result property="sname" column="sname"/>
+            <result property="age" column="age"/>
+            <result property="cid" column="cid"/>
+        </collection>
+    </resultMap>
+
+    <select id="getClazzAndStudents2" resultType="Map">
+        SELECT s.*, c.cid, c.cname
+        FROM t_student s
+                 LEFT JOIN t_clazz c ON s.cid = c.cid
+        WHERE c.cname = #{cname}
+    </select>
+
+</mapper>

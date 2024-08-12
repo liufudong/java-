@@ -1,0 +1,148 @@
+# 忽略所有 .idea 目录
+.idea/
+
+# 忽略所有的 .iml 文件
+*.iml
+
+# 忽略所有的 class 文件
+*.class
+
+# 忽略所有的 log 文件
+*.log
+
+# 忽略所有的项目构建产生的 target 目录
+target/
+
+# 忽略所有的外部库依赖
+external-library/
+
+# 忽略所有的 IDE 设置文件
+*.iws
+*.ipr
+*.iml
+
+# 忽略所有的 Eclipse 设置文件
+.settings/
+
+# 忽略所有的文档文件夹
+doc/
+
+# 忽略所有的 Eclipse 插件目录
+.eclipse/
+
+# 忽略所有的 IDEA 系统目录
+.idea/
+
+# 忽略所有的构建和部署脚本
+build/
+
+# 忽略所有的测试报告目录
+test-results/
+
+# 忽略所有的自动生成的文件
+generated/
+
+# 忽略所有的日志文件
+logs/
+
+# 忽略所有的包文件
+*.war
+*.ear
+
+# 忽略所有的数据库文件
+*.pid
+*.db
+*.db.backup
+
+# 忽略所有的 npm 配置文件
+.npmrc
+
+# 忽略所有的 yarn 配置文件
+.yarnrc
+
+# 忽略所有的 yarn 锁文件
+yarn.lock
+
+# 忽略所有的 package-lock.json 文件
+package-lock.json
+
+# 忽略所有的 .DS_Store 文件
+.DS_Store
+
+# 忽略所有的编译输出目录
+bin/
+
+# 忽略所有的 Gradle 缓存目录
+.gradle/
+
+# 忽略所有的 VSCode 设置目录
+.vscode/
+
+# 忽略所有的 IntelliJ IDEA 设置目录
+.idea/
+
+# 忽略所有的项目文件
+*.ipr
+*.iml
+*.iws
+
+# 忽略所有的日志文件
+*.log
+
+# 忽略所有的项目构建和部署目录
+target/
+
+# 忽略所有的编译输出文件
+*.class
+
+# 忽略所有的外部库依赖
+lib/
+
+# 忽略所有的文档文件
+doc/
+
+# 忽略所有的 Eclipse 项目文件
+.classpath
+.project
+
+# 忽略所有的系统文件
+.DS_Store
+
+# 忽略所有的同步目录
+.sync/
+
+# 忽略所有的日志文件
+*.log
+
+# 忽略所有的 IntelliJ IDEA 设置目录
+.idea/
+
+# 忽略所有的 Visual Studio 用户设置目录
+.vs/
+
+# 忽略所有的 SQL 数据库文件
+*.mdb
+*.ldb
+
+# 忽略所有的 JetBrains IDE 设置目录
+.idea/
+
+# 忽略所有的 npm 配置文件
+.npmrc
+
+# 忽略所有的 Bower 配置文件
+.bowerrc
+
+# 忽略所有的 node-waf 配置文件
+.lock-wscript
+
+# 忽略所有的 Composer 配置文件
+composer.lock
+
+# 忽略所有的 Yarn 配置文件
+.yarnrc
+
+# 忽略所有的 JSHint 配置文件
+.jshintrc
+
+# 忽略

@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: spinrfilter
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: utf-8
+    mode: HTML
+server:
+  port: 9004
+  servlet:
+    context-path: /spinrfilter

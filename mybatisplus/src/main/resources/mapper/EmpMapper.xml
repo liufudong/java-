@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplus.mapper.hsp.EmpMapper">
+  <!--  private String empNo;
+    private String eName;
+    private String job;
+    private String mgr;
+    private String hireDate;
+    private String sal;
+    private String comm;
+    private String deptNo;
+    private DeptBean deptBean;-->
+    <resultMap id="resultMapId" type="EmpBean">
+        <id column="empno" property="empNo"/>
+        <result column="ename" property="eName"/>
+        <result column="job" property="job"/>
+        <result column="mgr" property="mgr"/>
+        <result column="hiredate" property="hireDate"/>
+        <result column="sal" property="sal"/>
+        <result column="comm" property="comm"/>
+        <result column="deptno" property="deptNo"/>
+        <association property="deptBean">
+            <result column="dname" property="dName"></result>
+        </association>
+    </resultMap>
+    <select id="getEmpList" resultMap="resultMapId">
+        SELECT e.empno,e.ename,e.job,e.mgr,e.hiredate,e.sal,e.comm,e.deptno,
+               d.dname FROM emp e JOIN dept d WHERE e.deptno= d.deptno;
+    </select>
+</mapper>

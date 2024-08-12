@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplus.mapper.StudentMapper">
+    <resultMap id="StudentAndClazzResultMap" type="com.example.mybatisplus.pojo.Student">
+        <id property="sid" column="sid"/>
+        <result property="sname" column="sname"/>
+        <result property="cid" column="cid"/>
+        <association property="clazz" javaType="Clazz">
+            <id property="cid" column="cid"/>
+            <result property="cname" column="cname"/>
+        </association>
+    </resultMap>
+   <!-- 在这个查询中,我们使用了 LEFT JOIN 来连接 t_student 和 t_clazz 表,并在 resultMap 中定义了 association 元素来映射班级信息。-->
+    <select id="getStudentAndClazz" resultMap="StudentAndClazzResultMap">
+        SELECT s.*, c.cname
+        FROM t_student s
+                 LEFT JOIN t_clazz c ON s.cid = c.cid
+        WHERE s.sid  = #{sid}
+    </select>
+</mapper>
